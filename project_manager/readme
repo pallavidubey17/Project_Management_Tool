@@ -30,7 +30,7 @@ This project was developed as part of a technical assessment to demonstrate prof
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/project-management-tool.git
+git clone https://github.com/pallavidubey17/project_management_tool.git
 cd project-management-tool
 
 # Step 2: Create and Activate Virtual Environment
@@ -49,16 +49,16 @@ pip install -r requirements.txt
 # 1. Install PostgreSQL and create a database named `project_manager`.
 # 2. Update the database settings in `project_manager/settings.py`:
 #    ```python
-#    DATABASES = {
-#        'default': {
-#            'ENGINE': 'django.db.backends.postgresql',
-#            'NAME': 'project_manager',
-#            'USER': 'your_db_username',
-#            'PASSWORD': 'your_db_password',
-#            'HOST': 'localhost',
-#            'PORT': '5432',
-#        }
-#    }
+# DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'project_manager',
+        'USER': 'postgres',
+        'PASSWORD': 'Pallavi@12',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 #    ```
 
 # Step 5: Run Migrations
