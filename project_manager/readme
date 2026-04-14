@@ -1,0 +1,74 @@
+# Project Management Tool
+
+A **full-stack Django project management tool** built for seamless user authentication, project creation, and task tracking. This tool is designed to help teams manage projects and tasks efficiently with a clean, responsive interface.
+
+---
+
+## 🌟 Project Overview
+This project was developed as part of a technical assessment to demonstrate proficiency in **Django**, **PostgreSQL**, **RESTful APIs**, and **frontend development** using **Bootstrap 5**. The tool includes features for user authentication, project management, and task tracking, making it a comprehensive solution for managing projects and tasks.
+
+---
+
+## 📋 Key Features
+- **User Authentication**: Secure registration and login system using **JWT (JSON Web Tokens)**.
+- **Project Management**: Full **CRUD** (Create, Read, Update, Delete) functionality for projects.
+- **Task Management**: Full **CRUD** functionality for tasks, with status filtering (Todo, In Progress, Done).
+- **Responsive UI**: Built with **Bootstrap 5** for a mobile-friendly experience.
+- **Database**: **PostgreSQL** for reliable and scalable data storage.
+- **RESTful API**: Backend API built with **Django REST Framework** for seamless frontend-backend communication.
+
+---
+
+## 📌 Prerequisites
+- **Python 3.8+**
+- **PostgreSQL**
+- **Virtual Environment** (recommended for dependency management)
+
+---
+
+## 🛠 Installation and Setup
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/project-management-tool.git
+cd project-management-tool
+
+# Step 2: Create and Activate Virtual Environment
+python -m venv venv
+
+# For Windows:
+.\venv\Scripts\activate
+
+# For Mac/Linux:
+# source venv/bin/activate
+
+# Step 3: Install Dependencies
+pip install -r requirements.txt
+
+# Step 4: Configure PostgreSQL
+# 1. Install PostgreSQL and create a database named `project_manager`.
+# 2. Update the database settings in `project_manager/settings.py`:
+#    ```python
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.postgresql',
+#            'NAME': 'project_manager',
+#            'USER': 'your_db_username',
+#            'PASSWORD': 'your_db_password',
+#            'HOST': 'localhost',
+#            'PORT': '5432',
+#        }
+#    }
+#    ```
+
+# Step 5: Run Migrations
+python manage.py migrate
+
+# Step 6: Create a Superuser
+python manage.py createsuperuser
+# Follow the prompts to create an admin account.
+
+# Step 7: Run the Development Server
+python manage.py runserver
+# Open your browser and navigate to http://127.0.0.1:8000/
+                           
