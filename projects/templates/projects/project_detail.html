@@ -1,0 +1,68 @@
+{% extends "projects/base.html" %}
+{% block title %}{{ project.title }} - ProjectHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <a href="{% url 'project_list' %}" style="color:#888;font-size:0.85rem;text-decoration:none;">← All Projects</a>
+        <h1>{{ project.title }}</h1>
+        <span class="badge badge-{{ project.status }}">{{ project.get_status_display }}</span>
+        {% if project.deadline %}<small style="color:#888;margin-left:10px;">📅 Deadline: {{ project.deadline }}</small>{% endif %}
+    </div>
+    <div style="display:flex;gap:0.5rem;">
+        <a href="{% url 'project_edit' project.pk %}" class="btn btn-secondary">Edit Project</a>
+        <a href="{% url 'task_create' project.pk %}" class="btn btn-primary">+ Add Task</a>
+    </div>
+</div>
+
+{% if project.description %}
+<div class="card" style="margin-bottom:1rem;">
+    <p style="color:#555;">{{ project.description }}</p>
+</div>
+{% endif %}
+
+<div class="card">
+    <div class="card-title">📋 Tasks</div>
+
+    {% if tasks %}
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Assigned To</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+        <tr>
+            <td>
+                <strong>{{ task.title }}</strong>
+                {% if task.description %}<br><small style="color:#aaa;">{{ task.description|truncatechars:60 }}</small>{% endif %}
+            </td>
+            <td><span class="badge badge-{{ task.status }}">{{ task.get_status_display }}</span></td>
+            <td><span class="badge badge-{{ task.priority }}">{{ task.get_priority_display }}</span></td>
+            <td>{% if task.assigned_to %}{{ task.assigned_to.username }}{% else %}<span style="color:#ccc;">Unassigned</span>{% endif %}</td>
+            <td>{% if task.due_date %}{{ task.due_date }}{% else %}<span style="color:#ccc;">—</span>{% endif %}</td>
+            <td>
+                <a href="{% url 'task_edit' task.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                <form method="post" action="{% url 'task_delete' task.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this task?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <div class="icon">📝</div>
+        <p>No tasks yet. <a href="{% url 'task_create' project.pk %}">Add the first task!</a></p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "projects/base.html" %}
+{% block title %}Projects - ProjectHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>📁 All Projects</h1>
+    <a href="{% url 'project_create' %}" class="btn btn-primary">+ New Project</a>
+</div>
+
+<div class="card">
+    {% if projects %}
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Status</th>
+                <th>Tasks</th>
+                <th>Deadline</th>
+                <th>Progress</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+        <tr>
+            <td>
+                <a href="{% url 'project_detail' project.pk %}" style="color:#1a1a2e;font-weight:600;text-decoration:none;">{{ project.title }}</a>
+                {% if project.description %}
+                <br><small style="color:#aaa;">{{ project.description|truncatechars:50 }}</small>
+                {% endif %}
+            </td>
+            <td><span class="badge badge-{{ project.status }}">{{ project.get_status_display }}</span></td>
+            <td>{{ project.task_count }}</td>
+            <td>{% if project.deadline %}{{ project.deadline }}{% else %}<span style="color:#ccc;">—</span>{% endif %}</td>
+            <td style="min-width:120px;">
+                {% if project.task_count > 0 %}
+                {% widthratio project.completed_tasks project.task_count 100 as pct %}
+                <small>{{ project.completed_tasks }}/{{ project.task_count }} done</small>
+                <div class="progress-bar"><div class="progress-fill" style="width:{{ pct }}%"></div></div>
+                {% else %}
+                <small style="color:#ccc;">No tasks</small>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'project_edit' project.pk %}" class="btn btn-secondary btn-sm">Edit</a>
+                <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <div class="icon">📂</div>
+        <p>No projects found. <a href="{% url 'project_create' %}">Create your first project!</a></p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

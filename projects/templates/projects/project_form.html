@@ -1,0 +1,43 @@
+{% extends "projects/base.html" %}
+{% block title %}{{ action }} Project - ProjectHub{% endblock %}
+
+{% block content %}
+<div style="max-width:600px;margin:0 auto;">
+    <div class="page-header">
+        <h1>{{ action }} Project</h1>
+        <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Project Title *</label>
+                <input type="text" name="title" value="{{ project.title|default:'' }}" required placeholder="e.g. Website Redesign">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" placeholder="What is this project about?">{{ project.description|default:'' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    {% for val, label in project.STATUS_CHOICES|default:"" %}
+                        <option value="{{ val }}" {% if project.status == val %}selected{% endif %}>{{ label }}</option>
+                    {% empty %}
+                        <option value="planning">Planning</option>
+                        <option value="active">Active</option>
+                        <option value="on_hold">On Hold</option>
+                        <option value="completed">Completed</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Deadline</label>
+                <input type="date" name="deadline" value="{{ project.deadline|default:'' }}">
+            </div>
+            <button type="submit" class="btn btn-primary">{{ action }} Project</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

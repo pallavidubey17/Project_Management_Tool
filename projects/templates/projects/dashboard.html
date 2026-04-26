@@ -1,0 +1,79 @@
+{% extends "projects/base.html" %}
+{% block title %}Dashboard - ProjectHub{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>👋 Welcome, {{ user.username }}</h1>
+    <a href="{% url 'project_create' %}" class="btn btn-primary">+ New Project</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-box">
+        <div class="stat-num">{{ total_projects }}</div>
+        <div class="stat-label">Total Projects</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ active_projects }}</div>
+        <div class="stat-label">Active Projects</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ completed_projects }}</div>
+        <div class="stat-label">Completed</div>
+    </div>
+    <div class="stat-box">
+        <div class="stat-num">{{ total_tasks }}</div>
+        <div class="stat-label">Total Tasks</div>
+    </div>
+</div>
+
+<div class="grid-2">
+    <div class="card">
+        <div class="card-title">📁 Recent Projects</div>
+        {% if projects %}
+        <table>
+            <thead><tr><th>Project</th><th>Status</th><th>Tasks</th></tr></thead>
+            <tbody>
+            {% for project in projects %}
+            <tr>
+                <td><a href="{% url 'project_detail' project.pk %}" style="color:#1a1a2e;text-decoration:none;font-weight:500;">{{ project.title }}</a></td>
+                <td><span class="badge badge-{{ project.status }}">{{ project.get_status_display }}</span></td>
+                <td>{{ project.task_count }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top:1rem;">
+            <a href="{% url 'project_list' %}" class="btn btn-secondary btn-sm">View All Projects →</a>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="icon">📂</div>
+            <p>No projects yet. <a href="{% url 'project_create' %}">Create one!</a></p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-title">✅ My Pending Tasks</div>
+        {% if my_tasks %}
+        <table>
+            <thead><tr><th>Task</th><th>Priority</th><th>Status</th></tr></thead>
+            <tbody>
+            {% for task in my_tasks %}
+            <tr>
+                <td>{{ task.title }}<br><small style="color:#aaa;">{{ task.project.title }}</small></td>
+                <td><span class="badge badge-{{ task.priority }}">{{ task.get_priority_display }}</span></td>
+                <td><span class="badge badge-{{ task.status }}">{{ task.get_status_display }}</span></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="icon">🎉</div>
+            <p>No pending tasks assigned to you!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "projects/base.html" %}
+{% block title %}Delete Project - ProjectHub{% endblock %}
+
+{% block content %}
+<div style="max-width:500px;margin:3rem auto;">
+    <div class="card" style="text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">🗑️</div>
+        <h2 style="margin-bottom:0.5rem;">Delete Project?</h2>
+        <p style="color:#888;margin-bottom:1.5rem;">Are you sure you want to delete <strong>"{{ project.title }}"</strong>? This will also delete all its tasks. This action cannot be undone.</p>
+        <form method="post" style="display:flex;gap:1rem;justify-content:center;">
+            {% csrf_token %}
+            <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
